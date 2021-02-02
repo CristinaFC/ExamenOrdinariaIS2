@@ -12,26 +12,27 @@ import model.Bid;
 
 public class Main {
 
-    public Main() {
-    }
-
-    
     private final Map<String, Command> commands = new HashMap<>();
     private static final Scanner scanner = new Scanner(System.in);
     private final static Command NullCommand = new Command.Null();
 
     static ExitCommand exitCommand = new ExitCommand();
     static MockActiveAuctionLoader mockActiveAuctionLoad = new MockActiveAuctionLoader();
-    static Auction auction = mockActiveAuctionLoad.load();
+    private Auction auction = mockActiveAuctionLoad.load();
     static BidCommand bidCommand;
-
+    
+    public Main() {
+    }
     
     public static void main(String[] args) {
         
+        new Main().execute();
+    }
+    
+    private void execute(){
         System.out.println("Pujando " + auction.toString());
         
         while(true){
-            System.out.println("Pujas actuales: " + auction.actualBids());
             System.out.println("Seleccione una opción: \n"
                 + "Q - Salir\n"
                 + "P - Pujar\n"
@@ -50,12 +51,9 @@ public class Main {
                 case "Q":
                     exitCommand.execute();
             }
+            System.out.println("Pujando " + auction.toString());
+
         }
-        
-    }
-    
-    private void execute(){
-        while(true) commands.getOrDefault(input(), NullCommand).execute();
     }
     
     private static String input() {

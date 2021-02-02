@@ -14,7 +14,7 @@ public class BidCommand implements Command{
         this.bid = bid;
     }
 
-            @Override
+    @Override
     public void execute() {
         activeAuctionLoader.load().addBid(bid);
     }

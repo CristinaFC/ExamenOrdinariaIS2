@@ -12,7 +12,6 @@ public class MockActiveAuctionDisplay implements ActiveAuctionDisplay{
     @Override
     public void display(Auction auction) {
         this.auction = auction;
-        System.out.println(auction.description());
     }
 
     public Auction activeAction() {

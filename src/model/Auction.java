@@ -1,17 +1,16 @@
 package model;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Auction {
     
     private final Product product;
     private Double initPrice;
-    private List<Bid> bids = new ArrayList<>();
     private Time leftTime;
+    private Map<String,Bid> bids = new HashMap<>();
 
     public Auction(Product object, Double initPrice, Time leftTime) {
         this.product = object;
@@ -29,10 +28,8 @@ public class Auction {
             return;
         }
         initPrice = bid.price();
-        bids.add(bid);
-        for (Bid bid1 : bids) {
-            System.out.println(bid.toString());
-        }
+        bids.put(bid.productName(),bid);
+        
         System.out.println("Puja realizada.\n"
                 + "Precio actual del producto:" + initPrice);
     }
@@ -43,7 +40,7 @@ public class Auction {
 
     private boolean checkBidPrice(Bid bid) {
         if (bid.price() > initPrice) return true;
-        System.out.println("El precio debe ser mayor que la última puja");
+        System.out.println("El precio debe ser mayor que la última puja " + initPrice);
         return false;
     }
 
@@ -52,10 +49,11 @@ public class Auction {
         System.out.println("La puja no corresponde con esta subasta");
         return false;
     }
-    
-    public List<Bid> getBids() {
+
+    public Map<String, Bid> getBids() {
         return bids;
     }
+    
 
     public Time getLeftTime() {
         return leftTime;
@@ -68,14 +66,6 @@ public class Auction {
     @Override
     public String toString() {
         return "Auction{" + "product=" + product + ", initPrice=" + initPrice + ", bids=" + bids + ", leftTime=" + leftTime + '}';
-    }
-    
-    public String actualBids(){
-        String res = "";
-        for (int i = 0; i < bids.size(); i++) {
-            res += bids.get(i).toString();
-        }
-        return res;
     }
     
     
